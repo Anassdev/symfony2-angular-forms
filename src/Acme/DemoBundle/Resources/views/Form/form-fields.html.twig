@@ -1,0 +1,71 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <ul class="form-errors">
+                {% for error in errors %}
+                    <li>{{
+                        error.messagePluralization is null
+                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                        }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+
+{# overwrite form rows #}
+{% block form_rows %}
+    {% spaceless %}
+        {% for child in form %}
+            {{ form_row(child) }}
+        {% endfor %}
+    {% endspaceless %}
+{% endblock form_rows %}
+
+{% block form_row %}
+    {% set classNames = 'form-control' %}
+    {% set class = 'class' in attr | keys ? attr.class ~ ' ' ~ classNames : classNames %}
+
+    {% set attr = attr | merge({ 'class': class, 'ng-model': form.vars.full_name }) %}
+
+
+
+    {% if "checkbox" in form.vars.block_prefixes or "radio" in form.vars.block_prefixes %}
+        <div class="checkbox">
+            <label>
+                {{ form_widget(form) }}
+                {{ form.vars.label | default(form.vars.name | humanize) }}
+            </label>
+        </div>
+    {% elseif "choice" in form.vars.block_prefixes %}
+        <div class="form-group">
+            {{ form_label(form, null) }}
+
+            {% if "expanded" in form.vars and form.vars.expanded == true %}
+                <ul class="select-options">
+                    {% for index, choice in form %}
+                        {% if index ~'' != 'placeholder' %}
+                            <li>
+                                <label>
+                                    {{ form_widget(choice) }}
+                                    {{ choice.vars.label }}
+                                </label>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                {{ form_widget(form, { 'attr': attr }) }}
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="form-group">
+            {{ form_label(form, null) }}
+            {{ form_widget(form, { 'attr': attr }) }}
+        </div>
+    {% endif %}
+{% endblock form_row %}

@@ -1,0 +1,21 @@
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:        [ AcmeDemoBundle ]
+
+    assets:
+        angular_js:
+            inputs:
+                - '%kernel.root_dir%/Resources/public/bower/angular/angular.js'
+        angular_animate_js:
+            inputs:
+                - '%kernel.root_dir%/Resources/public/bower/angular-animate/angular-animate.js'
+        jquery_js:
+            inputs:
+                - '%kernel.root_dir%/Resources/public/bower/jquery/index.js'
+        bootstrap_js:
+            inputs:
+                - '%kernel.root_dir%/Resources/public/bower/bootstrap/dist/js/bootstrap.js'
+        bootstrap_css:
+            inputs:
+                - '%kernel.root_dir%/Resources/public/bower/bootstrap/dist/css/bootstrap.css'
