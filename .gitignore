@@ -1,0 +1,47 @@
+# Bootstrap
+app/bootstrap*
+
+# Symfony directories
+vendor/*
+tests/vendor/*
+*/logs/*
+*/cache/*
+web/uploads/*
+web/bundles/*
+web/css/*
+web/js/*
+web/assetic/*
+
+composer.phar
+composer.lock
+
+# Resource loaded via Bower
+app/Resources/public/bower/*
+
+# Configuration files
+app/config/parameters.ini
+app/config/parameters.yml
+app/config/parameters_dev.yml
+app/config/parameters_dev.php
+
+
+
+.DS_Store
+.idea
+.project
+.buildpath
+.settings
+nbproject
+*.sublime-project
+*.sublime-workspace
+atlassian-ide-plugin.xml
+
+
+log/*
+log/error.log
+log/access.log
+
+
+libpeerconnection.log
+node_modules
+socket
