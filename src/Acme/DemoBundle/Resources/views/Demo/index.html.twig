@@ -21,18 +21,19 @@
                     <th>First name</th>
                     <th>Last name</th>
                     <th>Email address</th>
+                    <th width="52px"><!-- actions --></th>
                 </tr>
             </thead>
             <tbody ng-show="contactsLoaded && contacts.length === 0">
                 <tr>
-                    <td colspan="3" style="text-align: center;">
+                    <td colspan="4" style="text-align: center;">
                         <i>No contacts yet</i>
                     </td>
                 </tr>
             </tbody>
             <tbody ng-show="contactsLoaded && contactsError.length">
                 <tr>
-                    <td colspan="3" style="text-align: center;">
+                    <td colspan="4" style="text-align: center;">
                         <i ng-bind="contactsError"></i>
                     </td>
                 </tr>
@@ -42,6 +43,9 @@
                     <td ng-bind="contact.firstName"></td>
                     <td ng-bind="contact.lastName"></td>
                     <td ng-bind="contact.emailAddress"></td>
+                    <td>
+                        <button type="button" class="btn btn-xs btn-default" ng-click="updateContact(contact)">edit</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -58,4 +62,12 @@
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+
+    <script>
+        window.setTimeout(function () {
+            $('.main-wrapper').scope().$eval('cities = {{ availableCities | json_encode | raw }}');
+        }, 250);
+    </script>
+
 {% endblock %}

@@ -28,7 +28,7 @@
                 {
                     var contacts = [];
 
-                    angular.forEach(response.data, function (value, key) {
+                    angular.forEach(response, function (value, key) {
                         contacts.push(new Contact(value));
                     });
 
@@ -46,7 +46,6 @@
 
                 return contactsDefer.promise;
             }
-
 
             /**
              * Find all contacts
@@ -79,8 +78,96 @@
                 return findAllDefer.promise;
             }
 
+            /**
+             * Create new contact on server
+             * @return {promise}
+             */
+            function create(contact, token)
+            {
+                var createDefer = $q.defer();
+
+                if (!contact instanceof Contact) {
+                    createDefer.reject('Not a valid contact');
+                } else {
+
+                    $http({
+                        method: 'POST',
+                        url: '/contact/add',
+                        data: $.extend({ _token: token }, contact),
+                        transformRequest: function(obj) {
+                            var str = [];
+                            for(var p in obj)
+                                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                            return str.join("&");
+                        },
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    })
+                        .success(contactCreateSuccess)
+                        .error(contactCreateError);
+                }
+
+
+                function contactCreateSuccess()
+                {
+                    contactsDefer = null; // clear contacts
+                    createDefer.resolve();
+                }
+
+                function contactCreateError(errors)
+                {
+                    createDefer.reject(errors);
+                }
+
+                return createDefer.promise;
+            }
+
+            /**
+             * Update existing contact on server
+             * @return {promise}
+             */
+            function update(contact, token)
+            {
+                var updateDefer = $q.defer();
+
+                if (!contact instanceof Contact) {
+                    updateDefer.reject('Not a valid contact');
+                } else {
+
+                    $http({
+                        method: 'POST',
+                        url: '/contact/update',
+                        data: $.extend({ _token: token }, contact),
+                        transformRequest: function(obj) {
+                            var str = [];
+                            for(var p in obj)
+                                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                            return str.join("&");
+                        },
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    })
+                        .success(contactUpdateSuccess)
+                        .error(contactUpdateError);
+                }
+
+
+                function contactUpdateSuccess()
+                {
+                    contactsDefer = null; // clear contacts
+                    updateDefer.resolve();
+                }
+
+                function contactUpdateError(errors)
+                {
+                    updateDefer.reject(errors);
+                }
+
+                return updateDefer.promise;
+            }
+
             return {
-                findAll: findAll
+                findAll: findAll,
+                create: create,
+                update: update
             }
         }
     ]);

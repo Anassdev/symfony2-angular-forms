@@ -5,34 +5,56 @@ namespace Acme\DemoBundle\Model;
 class ContactModel
 {
     /**
+     * @var integer
+     */
+    public $id;
+    /**
      * @var string
      */
-    protected $firstName;
+    public $firstName;
 
     /**
      * @var string
      */
-    protected $lastName;
+    public $lastName;
 
     /**
      * @var string
      */
-    protected $emailAddress;
+    public $emailAddress;
 
     /**
      * @var Boolean
      */
-    protected $colleague;
+    public $colleague;
 
     /**
      * @var string
      */
-    protected $sex;
+    public $sex;
 
     /**
      * @var string;
      */
-    protected $city;
+    public $city;
+
+    /**
+     * @param int $id
+     * @return ContactModel
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @param string $emailAddress
