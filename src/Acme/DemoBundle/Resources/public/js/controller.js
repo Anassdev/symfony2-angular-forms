@@ -40,7 +40,7 @@
             $scope.addNewContact = function ()
             {
                 $scope.contact = new Contact();
-                $('.modal').first().modal('show');
+                $('.contact-modal').modal('show');
             }
 
             /**
@@ -50,16 +50,31 @@
             $scope.updateContact = function (contact)
             {
                 $scope.contact = angular.copy(contact);
-                $('.modal').first().modal('show');
+                $('.contact-modal').modal('show');
             }
 
             // reset
-            $scope.cancelCreateContact = function ()
+            $scope.cancelCreateContact = function (force)
             {
+
+                if (!$scope.contactForm.$pristine && force !== true) {
+                    $('.confirm-modal').modal('show');
+                    return;
+                }
+                
                 $scope.contact = null;
                 $scope.contactForm.$setPristine();
-                $('.modal').first().modal('hide');
+                $('.contact-modal').modal('hide');
             };
+
+            $scope.closeConfirmModal = function (closeCreateModal)
+            {
+                if (closeCreateModal) {
+                    $scope.cancelCreateContact(true);
+                }
+
+                $('.confirm-modal').modal('hide');
+            }
 
             $scope.submitCreateContact = function ()
             {
@@ -71,7 +86,7 @@
                 {
                     $scope.contact = null;
                     $scope.contactForm.$setPristine();
-                    $('.modal').first().modal('hide');
+                    $('.contact-modal').modal('hide');
                     $scope.findAllContacts();
                 }
 
@@ -97,7 +112,7 @@
                 {
                     $scope.contact = null;
                     $scope.contactForm.$setPristine();
-                    $('.modal').first().modal('hide');
+                    $('.contact-modal').modal('hide');
                     $scope.findAllContacts();
                 }
 
