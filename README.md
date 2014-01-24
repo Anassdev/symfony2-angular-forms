@@ -1,9 +1,9 @@
 symfony2-angular-forms
 ======================
 
-Trying out Symfony2 forms with Angular forms
+Trying out Symfony2 forms with Angular form validation
 
-The purpose of this repository is to combine Symfony (2.3) forms and AngularJs (1.2) forms validition to create a nice user experience.
+The purpose of this repository is to combine Symfony (2.3) forms and AngularJs (1.2) form validition to create a nice user experience.
 
 
 Why use Symfony forms?
